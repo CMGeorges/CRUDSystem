@@ -42,6 +42,8 @@ namespace CRUDSystem
             this.btnSave = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
+            this.dataGridViewResult = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResult)).BeginInit();
             this.SuspendLayout();
             // 
             // txtFirstName
@@ -80,7 +82,6 @@ namespace CRUDSystem
             this.lblFirstName.Size = new System.Drawing.Size(57, 13);
             this.lblFirstName.TabIndex = 5;
             this.lblFirstName.Text = "First Name";
-            this.lblFirstName.Click += new System.EventHandler(this.label1_Click);
             // 
             // lblAddress
             // 
@@ -152,11 +153,20 @@ namespace CRUDSystem
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
             // 
+            // dataGridViewResult
+            // 
+            this.dataGridViewResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewResult.Location = new System.Drawing.Point(30, 315);
+            this.dataGridViewResult.Name = "dataGridViewResult";
+            this.dataGridViewResult.Size = new System.Drawing.Size(469, 146);
+            this.dataGridViewResult.TabIndex = 14;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(523, 355);
+            this.ClientSize = new System.Drawing.Size(527, 482);
+            this.Controls.Add(this.dataGridViewResult);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnSave);
@@ -172,6 +182,7 @@ namespace CRUDSystem
             this.Controls.Add(this.txtFirstName);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResult)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -192,6 +203,7 @@ namespace CRUDSystem
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.DataGridView dataGridViewResult;
     }
 }
 
