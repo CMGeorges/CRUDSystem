@@ -34,5 +34,24 @@ namespace CRUDSystem
             }
 
         }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            //Set Data
+            MyDetail.Fname = txtFirstName.Text;
+            MyDetail.Lname = txtLastName.Text;
+            MyDetail.Address = txtAddress.Text;
+            MyDetail.Age= Convert.ToInt32(txtAge.Text);
+            MyDetail.DateOfBirth= Convert.ToDateTime(dateTimePickerBirthDate.Text);
+
+            using(var MydbENtities = new MyModel())
+            {
+                MydbENtities.Details.Add(MyDetail);//save new details
+                MydbENtities.SaveChanges();
+            }
+
+            PopGridView();
+
+        }
     }
 }
