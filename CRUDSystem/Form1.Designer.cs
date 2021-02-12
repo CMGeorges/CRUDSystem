@@ -41,7 +41,6 @@ namespace CRUDSystem
             this.lblBirthDate = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.btnUpdate = new System.Windows.Forms.Button();
             this.dataGridViewResult = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResult)).BeginInit();
             this.SuspendLayout();
@@ -138,21 +137,13 @@ namespace CRUDSystem
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(317, 176);
+            this.btnDelete.Location = new System.Drawing.Point(317, 124);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 12;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
-            // 
-            // btnUpdate
-            // 
-            this.btnUpdate.Location = new System.Drawing.Point(317, 124);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(75, 23);
-            this.btnUpdate.TabIndex = 13;
-            this.btnUpdate.Text = "Update";
-            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // dataGridViewResult
             // 
@@ -161,6 +152,7 @@ namespace CRUDSystem
             this.dataGridViewResult.Name = "dataGridViewResult";
             this.dataGridViewResult.Size = new System.Drawing.Size(469, 146);
             this.dataGridViewResult.TabIndex = 14;
+            this.dataGridViewResult.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewResult_CellContentDoubleClick);
             // 
             // Form1
             // 
@@ -168,7 +160,6 @@ namespace CRUDSystem
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(527, 482);
             this.Controls.Add(this.dataGridViewResult);
-            this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.lblBirthDate);
@@ -204,7 +195,6 @@ namespace CRUDSystem
         private System.Windows.Forms.Label lblBirthDate;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.DataGridView dataGridViewResult;
     }
 }
