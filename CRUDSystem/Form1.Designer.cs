@@ -37,12 +37,12 @@ namespace CRUDSystem
             this.lblAddress = new System.Windows.Forms.Label();
             this.lblAge = new System.Windows.Forms.Label();
             this.lblLastName = new System.Windows.Forms.Label();
-            this.dateTimePickerBirthDate = new System.Windows.Forms.DateTimePicker();
-            this.lblBirthDate = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.dataGridViewResult = new System.Windows.Forms.DataGridView();
+            this.lblBirthDate = new System.Windows.Forms.Label();
+            this.dateTimePickerBirthDate = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResult)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,28 +50,28 @@ namespace CRUDSystem
             // 
             this.txtFirstName.Location = new System.Drawing.Point(85, 55);
             this.txtFirstName.Name = "txtFirstName";
-            this.txtFirstName.Size = new System.Drawing.Size(100, 20);
+            this.txtFirstName.Size = new System.Drawing.Size(195, 20);
             this.txtFirstName.TabIndex = 0;
             // 
             // txtLastName
             // 
             this.txtLastName.Location = new System.Drawing.Point(85, 104);
             this.txtLastName.Name = "txtLastName";
-            this.txtLastName.Size = new System.Drawing.Size(100, 20);
+            this.txtLastName.Size = new System.Drawing.Size(195, 20);
             this.txtLastName.TabIndex = 1;
             // 
             // txtAge
             // 
-            this.txtAge.Location = new System.Drawing.Point(85, 151);
+            this.txtAge.Location = new System.Drawing.Point(85, 191);
             this.txtAge.Name = "txtAge";
-            this.txtAge.Size = new System.Drawing.Size(100, 20);
+            this.txtAge.Size = new System.Drawing.Size(195, 20);
             this.txtAge.TabIndex = 2;
             // 
             // txtAddress
             // 
-            this.txtAddress.Location = new System.Drawing.Point(85, 204);
+            this.txtAddress.Location = new System.Drawing.Point(85, 244);
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(100, 20);
+            this.txtAddress.Size = new System.Drawing.Size(195, 20);
             this.txtAddress.TabIndex = 3;
             // 
             // lblFirstName
@@ -86,7 +86,7 @@ namespace CRUDSystem
             // lblAddress
             // 
             this.lblAddress.AutoSize = true;
-            this.lblAddress.Location = new System.Drawing.Point(27, 211);
+            this.lblAddress.Location = new System.Drawing.Point(27, 251);
             this.lblAddress.Name = "lblAddress";
             this.lblAddress.Size = new System.Drawing.Size(45, 13);
             this.lblAddress.TabIndex = 6;
@@ -95,7 +95,7 @@ namespace CRUDSystem
             // lblAge
             // 
             this.lblAge.AutoSize = true;
-            this.lblAge.Location = new System.Drawing.Point(27, 158);
+            this.lblAge.Location = new System.Drawing.Point(27, 198);
             this.lblAge.Name = "lblAge";
             this.lblAge.Size = new System.Drawing.Size(26, 13);
             this.lblAge.TabIndex = 7;
@@ -109,22 +109,6 @@ namespace CRUDSystem
             this.lblLastName.Size = new System.Drawing.Size(58, 13);
             this.lblLastName.TabIndex = 8;
             this.lblLastName.Text = "Last Name";
-            // 
-            // dateTimePickerBirthDate
-            // 
-            this.dateTimePickerBirthDate.Location = new System.Drawing.Point(85, 261);
-            this.dateTimePickerBirthDate.Name = "dateTimePickerBirthDate";
-            this.dateTimePickerBirthDate.Size = new System.Drawing.Size(100, 20);
-            this.dateTimePickerBirthDate.TabIndex = 9;
-            // 
-            // lblBirthDate
-            // 
-            this.lblBirthDate.AutoSize = true;
-            this.lblBirthDate.Location = new System.Drawing.Point(27, 268);
-            this.lblBirthDate.Name = "lblBirthDate";
-            this.lblBirthDate.Size = new System.Drawing.Size(51, 13);
-            this.lblBirthDate.TabIndex = 10;
-            this.lblBirthDate.Text = "BirthDate";
             // 
             // btnSave
             // 
@@ -157,22 +141,38 @@ namespace CRUDSystem
             // dataGridViewResult
             // 
             this.dataGridViewResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewResult.Location = new System.Drawing.Point(30, 315);
+            this.dataGridViewResult.Location = new System.Drawing.Point(47, 314);
             this.dataGridViewResult.Name = "dataGridViewResult";
-            this.dataGridViewResult.Size = new System.Drawing.Size(469, 146);
+            this.dataGridViewResult.Size = new System.Drawing.Size(686, 146);
             this.dataGridViewResult.TabIndex = 14;
+            // 
+            // lblBirthDate
+            // 
+            this.lblBirthDate.AutoSize = true;
+            this.lblBirthDate.Location = new System.Drawing.Point(27, 155);
+            this.lblBirthDate.Name = "lblBirthDate";
+            this.lblBirthDate.Size = new System.Drawing.Size(51, 13);
+            this.lblBirthDate.TabIndex = 16;
+            this.lblBirthDate.Text = "BirthDate";
+            // 
+            // dateTimePickerBirthDate
+            // 
+            this.dateTimePickerBirthDate.Location = new System.Drawing.Point(85, 148);
+            this.dateTimePickerBirthDate.Name = "dateTimePickerBirthDate";
+            this.dateTimePickerBirthDate.Size = new System.Drawing.Size(195, 20);
+            this.dateTimePickerBirthDate.TabIndex = 15;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(527, 482);
+            this.ClientSize = new System.Drawing.Size(766, 482);
+            this.Controls.Add(this.lblBirthDate);
+            this.Controls.Add(this.dateTimePickerBirthDate);
             this.Controls.Add(this.dataGridViewResult);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.lblBirthDate);
-            this.Controls.Add(this.dateTimePickerBirthDate);
             this.Controls.Add(this.lblLastName);
             this.Controls.Add(this.lblAge);
             this.Controls.Add(this.lblAddress);
@@ -200,12 +200,12 @@ namespace CRUDSystem
         private System.Windows.Forms.Label lblAddress;
         private System.Windows.Forms.Label lblAge;
         private System.Windows.Forms.Label lblLastName;
-        private System.Windows.Forms.DateTimePicker dateTimePickerBirthDate;
-        private System.Windows.Forms.Label lblBirthDate;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.DataGridView dataGridViewResult;
+        private System.Windows.Forms.Label lblBirthDate;
+        private System.Windows.Forms.DateTimePicker dateTimePickerBirthDate;
     }
 }
 
