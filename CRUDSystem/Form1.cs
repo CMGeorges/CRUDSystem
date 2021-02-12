@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
-using System.Data.Entity;
+using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using CRUDSystem.Entities;
 
@@ -47,106 +51,11 @@ namespace CRUDSystem
 
             using(var MydbENtities = new MyModel())
             {
-
-                if(MyDetail.ID == 0)
-                {
-                    MydbENtities.Details.Add(MyDetail);//save new details
-                    MydbENtities.SaveChanges();
-
-
-                    MessageBox.Show("Information has been Saved.","Saved",MessageBoxButtons.OK,MessageBoxIcon.Information);//Show Message as the detail is saved.
-                }
-                else
-                {
-                    MydbENtities.Entry(MyDetail).State = EntityState.Modified;//update a detail
-                    MydbENtities.SaveChanges();
-                    btnSave.Text = "Save";
-                    MyDetail.ID = 0;
-
-                    MessageBox.Show("Information has been Updated.", "Modified", MessageBoxButtons.OK, MessageBoxIcon.Information);//Show Message as the detail is updated.
-                }
-             
+                MydbENtities.Details.Add(MyDetail);//save new details
+                MydbENtities.SaveChanges();
             }
 
             PopGridView();
-
-        }
-
-
-        /// <summary>
-        /// to set the fields on doubleclicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dataGridViewResult_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (dataGridViewResult.CurrentRow.Index != -1)
-            {
-                MyDetail.ID = Convert.ToInt32(dataGridViewResult.CurrentRow.Cells[0].Value);
-                using(var MyDBEntities = new MyModel())
-                {
-                    MyDetail = MyDBEntities.Details.Where(x => x.ID == MyDetail.ID).FirstOrDefault();
-                    txtFirstName.Text = MyDetail.Fname;
-                    txtLastName.Text = MyDetail.Lname;
-                    txtAge.Text = MyDetail.Age.ToString();
-                    txtAddress.Text = MyDetail.Address;
-                    dateTimePickerBirthDate.Text = MyDetail.DateOfBirth.ToString();
-
-                    btnSave.Text = "Update";
-                   
-                }
-                
-                
-            }
-        }
-
-
-        /// <summary>
-        /// Remove some
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-
-            if (MessageBox.Show("Are you sure you want to delete this  information? ","Please Confirmed",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                using (var MyDbEntites = new MyModel())
-                {
-
-                    var entry = MyDbEntites.Entry(MyDetail);
-                    if (entry.State == EntityState.Detached)
-                    {
-                        MyDbEntites.Details.Attach(MyDetail);
-
-
-                        MyDbEntites.Details.Remove(MyDetail);
-                        MyDbEntites.SaveChanges();
-                        PopGridView();
-                        ClearFields();
-                        MessageBox.Show("Information has been Deleted.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);//Show Message as the detail is deleted.
-                    }
-
-                }
-
-            }
-
-           
-        }
-
-
-
-        /// <summary>
-        /// To clear the fields
-        /// </summary>
-        void ClearFields()
-        {
-
-            txtFirstName.Text ="";
-            txtLastName.Text = "";
-            txtAge.Text = "";
-            txtAddress.Text = "";
-            dateTimePickerBirthDate.Text = DateTime.Now.ToString();
 
         }
     }
