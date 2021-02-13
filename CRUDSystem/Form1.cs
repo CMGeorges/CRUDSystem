@@ -149,5 +149,28 @@ namespace CRUDSystem
             dateTimePickerBirthDate.Text = DateTime.Now.ToString();
 
         }
+
+        private void BirthDate_ValueChanged(object sender, EventArgs e)
+        {
+            int dateDiff = DateTime.Now.Year - dateTimePickerBirthDate.Value.Year;
+
+            txtAge.Text = dateDiff.ToString();
+        }
+
+
+        /// <summary>
+        /// To Refresh the table.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            PopGridView();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            ClearFields();
+        }
     }
 }
