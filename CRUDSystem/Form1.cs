@@ -1,7 +1,11 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
-using System.Data.Entity;
+using System.Drawing;
 using System.Linq;
+
+
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CRUDSystem.Entities;
@@ -49,6 +53,7 @@ namespace CRUDSystem
             using(var MydbENtities = new MyModel())
             {
 
+
                 if(MyDetail.ID == 0)
                 {
                     MydbENtities.Details.Add(MyDetail);//save new details
@@ -67,11 +72,13 @@ namespace CRUDSystem
                     MessageBox.Show("Information has been Updated.", "Modified", MessageBoxButtons.OK, MessageBoxIcon.Information);//Show Message as the detail is updated.
                 }
              
+
             }
 
             await PopGridView();
 
         }
+
 
 
         /// <summary>
@@ -174,5 +181,6 @@ namespace CRUDSystem
         {
             ClearFields();
         }
+
     }
 }
