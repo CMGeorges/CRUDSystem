@@ -1,4 +1,4 @@
-﻿
+
 namespace CRUDSystem
 {
     partial class Form1
@@ -41,6 +41,10 @@ namespace CRUDSystem
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.dataGridViewResult = new System.Windows.Forms.DataGridView();
+
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnRefresh = new System.Windows.Forms.Button();
+
             this.lblBirthDate = new System.Windows.Forms.Label();
             this.dateTimePickerBirthDate = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResult)).BeginInit();
@@ -50,28 +54,36 @@ namespace CRUDSystem
             // 
             this.txtFirstName.Location = new System.Drawing.Point(85, 55);
             this.txtFirstName.Name = "txtFirstName";
-            this.txtFirstName.Size = new System.Drawing.Size(195, 20);
+
+            this.txtFirstName.Size = new System.Drawing.Size(198, 20);
+
             this.txtFirstName.TabIndex = 0;
             // 
             // txtLastName
             // 
             this.txtLastName.Location = new System.Drawing.Point(85, 104);
             this.txtLastName.Name = "txtLastName";
-            this.txtLastName.Size = new System.Drawing.Size(195, 20);
+
+            this.txtLastName.Size = new System.Drawing.Size(198, 20);
+
             this.txtLastName.TabIndex = 1;
             // 
             // txtAge
             // 
-            this.txtAge.Location = new System.Drawing.Point(85, 191);
+
+            this.txtAge.Location = new System.Drawing.Point(85, 198);
             this.txtAge.Name = "txtAge";
-            this.txtAge.Size = new System.Drawing.Size(195, 20);
+            this.txtAge.Size = new System.Drawing.Size(198, 20);
+
             this.txtAge.TabIndex = 2;
             // 
             // txtAddress
             // 
-            this.txtAddress.Location = new System.Drawing.Point(85, 244);
+
+            this.txtAddress.Location = new System.Drawing.Point(85, 251);
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(195, 20);
+            this.txtAddress.Size = new System.Drawing.Size(198, 20);
+
             this.txtAddress.TabIndex = 3;
             // 
             // lblFirstName
@@ -86,7 +98,9 @@ namespace CRUDSystem
             // lblAddress
             // 
             this.lblAddress.AutoSize = true;
-            this.lblAddress.Location = new System.Drawing.Point(27, 251);
+
+            this.lblAddress.Location = new System.Drawing.Point(27, 258);
+
             this.lblAddress.Name = "lblAddress";
             this.lblAddress.Size = new System.Drawing.Size(45, 13);
             this.lblAddress.TabIndex = 6;
@@ -95,7 +109,9 @@ namespace CRUDSystem
             // lblAge
             // 
             this.lblAge.AutoSize = true;
-            this.lblAge.Location = new System.Drawing.Point(27, 198);
+
+            this.lblAge.Location = new System.Drawing.Point(27, 205);
+
             this.lblAge.Name = "lblAge";
             this.lblAge.Size = new System.Drawing.Size(26, 13);
             this.lblAge.TabIndex = 7;
@@ -112,7 +128,7 @@ namespace CRUDSystem
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(317, 66);
+            this.btnSave.Location = new System.Drawing.Point(315, 55);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 11;
@@ -122,7 +138,9 @@ namespace CRUDSystem
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(317, 176);
+
+            this.btnDelete.Location = new System.Drawing.Point(315, 84);
+
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 12;
@@ -143,7 +161,9 @@ namespace CRUDSystem
             this.dataGridViewResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewResult.Location = new System.Drawing.Point(47, 314);
             this.dataGridViewResult.Name = "dataGridViewResult";
-            this.dataGridViewResult.Size = new System.Drawing.Size(686, 146);
+
+            this.dataGridViewResult.Size = new System.Drawing.Size(584, 146);
+
             this.dataGridViewResult.TabIndex = 14;
             // 
             // lblBirthDate
@@ -162,13 +182,54 @@ namespace CRUDSystem
             this.dateTimePickerBirthDate.Size = new System.Drawing.Size(195, 20);
             this.dateTimePickerBirthDate.TabIndex = 15;
             // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(315, 114);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 15;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(539, 286);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.TabIndex = 16;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // lblBirthDate
+            // 
+            this.lblBirthDate.AutoSize = true;
+            this.lblBirthDate.Location = new System.Drawing.Point(27, 159);
+            this.lblBirthDate.Name = "lblBirthDate";
+            this.lblBirthDate.Size = new System.Drawing.Size(51, 13);
+            this.lblBirthDate.TabIndex = 18;
+            this.lblBirthDate.Text = "BirthDate";
+            // 
+            // dateTimePickerBirthDate
+            // 
+            this.dateTimePickerBirthDate.Location = new System.Drawing.Point(85, 152);
+            this.dateTimePickerBirthDate.Name = "dateTimePickerBirthDate";
+            this.dateTimePickerBirthDate.Size = new System.Drawing.Size(198, 20);
+            this.dateTimePickerBirthDate.TabIndex = 17;
+            this.dateTimePickerBirthDate.ValueChanged += new System.EventHandler(this.BirthDate_ValueChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(766, 482);
+
+            this.ClientSize = new System.Drawing.Size(647, 482);
             this.Controls.Add(this.lblBirthDate);
             this.Controls.Add(this.dateTimePickerBirthDate);
+            this.Controls.Add(this.btnRefresh);
+            this.Controls.Add(this.btnCancel);
+
             this.Controls.Add(this.dataGridViewResult);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.btnDelete);
@@ -204,6 +265,10 @@ namespace CRUDSystem
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.DataGridView dataGridViewResult;
+
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnRefresh;
+
         private System.Windows.Forms.Label lblBirthDate;
         private System.Windows.Forms.DateTimePicker dateTimePickerBirthDate;
     }
