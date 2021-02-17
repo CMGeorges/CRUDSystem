@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using CRUDSystem.Entities;
 
@@ -16,17 +17,17 @@ namespace CRUDSystem
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
-            PopGridView();
+            await PopGridView();
         }
 
-        private void PopGridView()
+        private async Task PopGridView()
         {
 
             using(var MyModelEntities = new MyModel())
             {
-                dataGridViewResult.DataSource = MyModelEntities.Details.ToList<Detail>();
+                dataGridViewResult.DataSource = await MyModelEntities.Details.ToListAsync<Detail>();
             }
 
         }
@@ -36,7 +37,7 @@ namespace CRUDSystem
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnSave_Click(object sender, EventArgs e)
+        private async void btnSave_Click(object sender, EventArgs e)//async make  the method as a asynchrone method
         {
             //Set Data
             MyDetail.Fname = txtFirstName.Text;
@@ -51,7 +52,7 @@ namespace CRUDSystem
                 if(MyDetail.ID == 0)
                 {
                     MydbENtities.Details.Add(MyDetail);//save new details
-                    MydbENtities.SaveChanges();
+                    await MydbENtities.SaveChangesAsync();//complete the async method
 
 
                     MessageBox.Show("Information has been Saved.","Saved",MessageBoxButtons.OK,MessageBoxIcon.Information);//Show Message as the detail is saved.
@@ -59,7 +60,7 @@ namespace CRUDSystem
                 else
                 {
                     MydbENtities.Entry(MyDetail).State = EntityState.Modified;//update a detail
-                    MydbENtities.SaveChanges();
+                    await MydbENtities.SaveChangesAsync();
                     btnSave.Text = "Save";
                     MyDetail.ID = 0;
 
@@ -68,7 +69,7 @@ namespace CRUDSystem
              
             }
 
-            PopGridView();
+            await PopGridView();
 
         }
 
@@ -106,7 +107,7 @@ namespace CRUDSystem
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnDelete_Click(object sender, EventArgs e)
+        private async void btnDelete_Click(object sender, EventArgs e)
         {
 
             if (MessageBox.Show("Are you sure you want to delete this  information? ","Please Confirmed",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
@@ -121,8 +122,8 @@ namespace CRUDSystem
 
 
                         MyDbEntites.Details.Remove(MyDetail);
-                        MyDbEntites.SaveChanges();
-                        PopGridView();
+                        await MyDbEntites.SaveChangesAsync();
+                        await PopGridView();
                         ClearFields();
                         MessageBox.Show("Information has been Deleted.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);//Show Message as the detail is deleted.
                     }
@@ -146,6 +147,7 @@ namespace CRUDSystem
             txtLastName.Text = "";
             txtAge.Text = "";
             txtAddress.Text = "";
+            btnSave.Text = "Save";
             dateTimePickerBirthDate.Text = DateTime.Now.ToString();
 
         }
@@ -163,9 +165,9 @@ namespace CRUDSystem
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnRefresh_Click(object sender, EventArgs e)
+        private async void btnRefresh_Click(object sender, EventArgs e)
         {
-            PopGridView();
+            await PopGridView();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
