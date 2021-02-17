@@ -17,12 +17,12 @@ namespace CRUDSystem
             InitializeComponent();
         }
 
-        private async void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)//making the metgod async
         {
             await PopGridView();
         }
 
-        private async Task PopGridView()
+        private async Task PopGridView()//making the metgod async
         {
 
             using(var MyModelEntities = new MyModel())
@@ -79,14 +79,14 @@ namespace CRUDSystem
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dataGridViewResult_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private async void dataGridViewResult_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridViewResult.CurrentRow.Index != -1)
             {
                 MyDetail.ID = Convert.ToInt32(dataGridViewResult.CurrentRow.Cells[0].Value);
                 using(var MyDBEntities = new MyModel())
                 {
-                    MyDetail = MyDBEntities.Details.Where(x => x.ID == MyDetail.ID).FirstOrDefault();
+                    MyDetail =  await MyDBEntities.Details.Where(x => x.ID == MyDetail.ID).FirstOrDefaultAsync();
                     txtFirstName.Text = MyDetail.Fname;
                     txtLastName.Text = MyDetail.Lname;
                     txtAge.Text = MyDetail.Age.ToString();
@@ -107,7 +107,7 @@ namespace CRUDSystem
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void btnDelete_Click(object sender, EventArgs e)
+        private async void btnDelete_Click(object sender, EventArgs e)//making the metgod async
         {
 
             if (MessageBox.Show("Are you sure you want to delete this  information? ","Please Confirmed",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
@@ -165,7 +165,7 @@ namespace CRUDSystem
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void btnRefresh_Click(object sender, EventArgs e)
+        private async void btnRefresh_Click(object sender, EventArgs e)//making the metgod async
         {
             await PopGridView();
         }
