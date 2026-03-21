@@ -1,180 +1,121 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-
-
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CRUDSystem.Application.Abstractions;
 using CRUDSystem.Entities;
+using CRUDSystem.Infrastructure;
 
 namespace CRUDSystem
 {
     public partial class Form1 : Form
     {
+        private readonly IDetailService _detailService;
+        private int _selectedDetailId;
 
-        Detail MyDetail = new Detail();
         public Form1()
+            : this(CompositionRoot.CreateDetailService())
         {
+        }
+
+        internal Form1(IDetailService detailService)
+        {
+            _detailService = detailService ?? throw new ArgumentNullException(nameof(detailService));
             InitializeComponent();
         }
 
-        private async void Form1_Load(object sender, EventArgs e)//making the metgod async
+        private async void Form1_Load(object sender, EventArgs e)
         {
-            await PopGridView();
+            await RefreshGridAsync();
         }
 
-        private async Task PopGridView()//making the metgod async
+        private async Task RefreshGridAsync()
         {
+            dataGridViewResult.DataSource = null;
+            dataGridViewResult.DataSource = await _detailService.GetDetailsAsync();
+        }
 
-            using(var MyModelEntities = new MyModel())
+        private async void btnSave_Click(object sender, EventArgs e)
+        {
+            Detail detail;
+            if (!TryBuildDetailFromForm(out detail))
             {
-                dataGridViewResult.DataSource = await MyModelEntities.Details.ToListAsync<Detail>();
+                return;
             }
 
+            var isNewDetail = detail.ID == 0;
+            await _detailService.SaveDetailAsync(detail);
+            await RefreshGridAsync();
+            ClearFields();
+
+            MessageBox.Show(
+                isNewDetail ? "Information has been saved." : "Information has been updated.",
+                isNewDetail ? "Saved" : "Updated",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
-        /// <summary>
-        /// Save Detail
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void btnSave_Click(object sender, EventArgs e)//async make  the method as a asynchrone method
-        {
-            //Set Data
-            MyDetail.Fname = txtFirstName.Text;
-            MyDetail.Lname = txtLastName.Text;
-            MyDetail.Address = txtAddress.Text;
-            MyDetail.Age= Convert.ToInt32(txtAge.Text);
-            MyDetail.DateOfBirth= Convert.ToDateTime(dateTimePickerBirthDate.Text);
-
-            using(var MydbENtities = new MyModel())
-            {
-
-
-                if(MyDetail.ID == 0)
-                {
-                    MydbENtities.Details.Add(MyDetail);//save new details
-                    await MydbENtities.SaveChangesAsync();//complete the async method
-
-
-                    MessageBox.Show("Information has been Saved.","Saved",MessageBoxButtons.OK,MessageBoxIcon.Information);//Show Message as the detail is saved.
-                }
-                else
-                {
-                    MydbENtities.Entry(MyDetail).State = EntityState.Modified;//update a detail
-                    await MydbENtities.SaveChangesAsync();
-                    btnSave.Text = "Save";
-                    MyDetail.ID = 0;
-
-                    MessageBox.Show("Information has been Updated.", "Modified", MessageBoxButtons.OK, MessageBoxIcon.Information);//Show Message as the detail is updated.
-                }
-             
-
-            }
-
-            await PopGridView();
-
-        }
-
-
-
-        /// <summary>
-        /// to set the fields on doubleclicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private async void dataGridViewResult_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridViewResult.CurrentRow.Index != -1)
+            if (dataGridViewResult.CurrentRow == null || dataGridViewResult.CurrentRow.Index == -1)
             {
-                MyDetail.ID = Convert.ToInt32(dataGridViewResult.CurrentRow.Cells[0].Value);
-                using(var MyDBEntities = new MyModel())
-                {
-                    MyDetail =  await MyDBEntities.Details.Where(x => x.ID == MyDetail.ID).FirstOrDefaultAsync();
-                    txtFirstName.Text = MyDetail.Fname;
-                    txtLastName.Text = MyDetail.Lname;
-                    txtAge.Text = MyDetail.Age.ToString();
-                    txtAddress.Text = MyDetail.Address;
-                    dateTimePickerBirthDate.Text = MyDetail.DateOfBirth.ToString();
-
-                    btnSave.Text = "Update";
-                   
-                }
-                
-                
-            }
-        }
-
-
-        /// <summary>
-        /// Remove some
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void btnDelete_Click(object sender, EventArgs e)//making the metgod async
-        {
-
-            if (MessageBox.Show("Are you sure you want to delete this  information? ","Please Confirmed",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                using (var MyDbEntites = new MyModel())
-                {
-
-                    var entry = MyDbEntites.Entry(MyDetail);
-                    if (entry.State == EntityState.Detached)
-                    {
-                        MyDbEntites.Details.Attach(MyDetail);
-
-
-                        MyDbEntites.Details.Remove(MyDetail);
-                        await MyDbEntites.SaveChangesAsync();
-                        await PopGridView();
-                        ClearFields();
-                        MessageBox.Show("Information has been Deleted.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);//Show Message as the detail is deleted.
-                    }
-
-                }
-
+                return;
             }
 
-           
+            _selectedDetailId = Convert.ToInt32(dataGridViewResult.CurrentRow.Cells[0].Value);
+            var detail = await _detailService.GetDetailAsync(_selectedDetailId);
+            if (detail == null)
+            {
+                return;
+            }
+
+            txtFirstName.Text = detail.Fname;
+            txtLastName.Text = detail.Lname;
+            txtAge.Text = detail.Age.ToString();
+            txtAddress.Text = detail.Address;
+            dateTimePickerBirthDate.Value = detail.DateOfBirth;
+            btnSave.Text = "Update";
         }
 
-
-
-        /// <summary>
-        /// To clear the fields
-        /// </summary>
-        void ClearFields()
+        private async void btnDelete_Click(object sender, EventArgs e)
         {
+            if (_selectedDetailId == 0)
+            {
+                MessageBox.Show("Select a record before deleting.", "Delete", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            txtFirstName.Text ="";
-            txtLastName.Text = "";
-            txtAge.Text = "";
-            txtAddress.Text = "";
+            if (MessageBox.Show("Are you sure you want to delete this information?", "Please Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+
+            await _detailService.DeleteDetailAsync(_selectedDetailId);
+            await RefreshGridAsync();
+            ClearFields();
+            MessageBox.Show("Information has been deleted.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ClearFields()
+        {
+            _selectedDetailId = 0;
+            txtFirstName.Text = string.Empty;
+            txtLastName.Text = string.Empty;
+            txtAge.Text = string.Empty;
+            txtAddress.Text = string.Empty;
             btnSave.Text = "Save";
-            dateTimePickerBirthDate.Text = DateTime.Now.ToString();
-
+            dateTimePickerBirthDate.Value = DateTime.Now;
         }
 
         private void BirthDate_ValueChanged(object sender, EventArgs e)
         {
-            int dateDiff = DateTime.Now.Year - dateTimePickerBirthDate.Value.Year;
-
+            var dateDiff = DateTime.Now.Year - dateTimePickerBirthDate.Value.Year;
             txtAge.Text = dateDiff.ToString();
         }
 
-
-        /// <summary>
-        /// To Refresh the table.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void btnRefresh_Click(object sender, EventArgs e)//making the metgod async
+        private async void btnRefresh_Click(object sender, EventArgs e)
         {
-            await PopGridView();
+            await RefreshGridAsync();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -182,5 +123,34 @@ namespace CRUDSystem
             ClearFields();
         }
 
+        private bool TryBuildDetailFromForm(out Detail detail)
+        {
+            detail = null;
+
+            if (string.IsNullOrWhiteSpace(txtFirstName.Text) || string.IsNullOrWhiteSpace(txtLastName.Text))
+            {
+                MessageBox.Show("First name and last name are required.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            int age;
+            if (!int.TryParse(txtAge.Text, out age))
+            {
+                MessageBox.Show("Age must be a valid number.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            detail = new Detail
+            {
+                ID = _selectedDetailId,
+                Fname = txtFirstName.Text.Trim(),
+                Lname = txtLastName.Text.Trim(),
+                Address = txtAddress.Text.Trim(),
+                Age = age,
+                DateOfBirth = dateTimePickerBirthDate.Value.Date
+            };
+
+            return true;
+        }
     }
 }
