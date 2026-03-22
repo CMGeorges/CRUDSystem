@@ -32,7 +32,7 @@ jobs:
         run: Compress-Archive -Path CRUDSystem\bin\Release\* -DestinationPath CRUDSystem-Release.zip
 
       - name: Upload release artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: crudsystem-release
           path: CRUDSystem-Release.zip
