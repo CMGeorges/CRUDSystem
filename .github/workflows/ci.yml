@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - master
+      - main
+
+jobs:
+  build-test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nuget/packages
+            packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/packages.config', '**/*.sln') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore solution packages
+        run: nuget restore CRUDSystem.sln
+
+      - name: Restore test project packages
+        run: dotnet restore tests/CRUDSystem.Tests/CRUDSystem.Tests.csproj
+
+      - name: Build solution
+        run: msbuild CRUDSystem.sln /p:Configuration=Release /p:Platform="Any CPU"
+
+      - name: Run unit tests with coverage gate
+        run: >
+          dotnet test tests/CRUDSystem.Tests/CRUDSystem.Tests.csproj
+          --configuration Release
+          --no-restore
+          /p:CollectCoverage=true
+          /p:CoverletOutput=./TestResults/Coverage/
+          /p:CoverletOutputFormat=cobertura
+          /p:Threshold=100
+          /p:ThresholdType=line,branch,method
+          /p:ThresholdStat=total
+          /p:ExcludeByFile="**/Form1.cs;**/Form1.Designer.cs;**/Program.cs;**/Migrations/*.cs;**/Properties/*.cs;**/Infrastructure/**/*.cs"
+
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-results
+          path: tests/CRUDSystem.Tests/TestResults/Coverage/

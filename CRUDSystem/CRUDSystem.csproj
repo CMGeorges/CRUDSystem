@@ -75,7 +75,10 @@
   <ItemGroup>
     <Compile Include="Application\Abstractions\IDetailRepository.cs" />
     <Compile Include="Application\Abstractions\IDetailService.cs" />
+    <Compile Include="Application\Services\AgeCalculator.cs" />
     <Compile Include="Application\Services\DetailService.cs" />
+    <Compile Include="Application\Validation\DetailValidator.cs" />
+    <Compile Include="Application\Validation\ValidationResult.cs" />
     <Compile Include="Entities\Detail.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CRUDSystem.Application.Abstractions;
+using CRUDSystem.Application.Services;
+using CRUDSystem.Application.Validation;
 using CRUDSystem.Entities;
 using CRUDSystem.Infrastructure;
 
@@ -109,8 +111,7 @@ namespace CRUDSystem
 
         private void BirthDate_ValueChanged(object sender, EventArgs e)
         {
-            var dateDiff = DateTime.Now.Year - dateTimePickerBirthDate.Value.Year;
-            txtAge.Text = dateDiff.ToString();
+            txtAge.Text = AgeCalculator.CalculateAge(dateTimePickerBirthDate.Value.Date, DateTime.Now.Date).ToString();
         }
 
         private async void btnRefresh_Click(object sender, EventArgs e)
@@ -149,6 +150,13 @@ namespace CRUDSystem
                 Age = age,
                 DateOfBirth = dateTimePickerBirthDate.Value.Date
             };
+
+            var validationResult = DetailValidator.Validate(detail);
+            if (!validationResult.IsValid)
+            {
+                MessageBox.Show(validationResult.ErrorMessage, "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
 
             return true;
         }
